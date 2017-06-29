@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/css/bootstrap-slider.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.min.js">
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        #player {
+            margin-top: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-5">
+                <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+                <div id="player"></div>
+
+                <script>
+                    // 2. This code loads the IFrame Player API code asynchronously.
+                    var tag = document.createElement('script');
+
+                    tag.src = "https://www.youtube.com/iframe_api";
+                    var firstScriptTag = document.getElementsByTagName('script')[0];
+                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                    // 3. This function creates an <iframe> (and YouTube player)
+                    //    after the API code downloads.
+                    var player;
+
+                    function debounce(func, wait, immediate) {
+                        var timeout;
+                        return function () {
+                            var context = this,
+                                args = arguments;
+                            var later = function () {
+                                timeout = null;
+                                if (!immediate) func.apply(context, args);
+                            };
+                            var callNow = immediate && !timeout;
+                            clearTimeout(timeout);
+                            timeout = setTimeout(later, wait);
+                            if (callNow) func.apply(context, args);
+                        };
+                    };
+
+                    var currentSpeed = 60;
+
+                    var videoList = {
+                        30: 'LgGBAnSftVs',
+                        40: 'SO79x_vOS6o',
+                        50: '4y7u1FtMCdk',
+                        60: 'aQoUfeRawX8',
+                        70: '4SDBJp_B5qQ',
+                        80: 'uH1MrhJZ2NA',
+                        90: '9U3RG0JU4Ds',
+                        100: 'zZbM9n9j3_g',
+                        110: 'CrDc_TsmYLI',
+                        120: 'HTmKgbT3PFA',
+                        130: 'ov_g-r7Vo8M',
+                        140: '2vhnxYfWco8',
+                        150: 'pSlVtxLOYiM',
+                        160: '4wEilxoIGtg',
+                        170: 'jt3AeGE5CJs',
+                        180: 'dx5YI_mRXlo',
+                        190: 'ETwlAAKKXGA',
+                        200: 'IZi3vMmmMoA'
+                    };
+
+
+                    function func(event) {
+                        currentSpeed = event.value.newValue;
+                        player.loadVideoById(videoList[event.value.newValue]);
+
+
+                    }
+
+                    debounced = debounce(func, 250)
+
+                    function onYouTubeIframeAPIReady() {
+
+
+                        var a = $("#ex8").slider({
+                                tooltip: 'always'
+                            })
+                            .on('change', debounced);
+
+
+
+
+                        player = new YT.Player('player', {
+                            height: '240',
+                            width: '320',
+                            videoId: videoList[currentSpeed],
+                            events: {
+                                'onReady': onPlayerReady
+                            }
+                        });
+                    }
+
+                    // 4. The API will call this function when the video player is ready.
+                    function onPlayerReady(event) {
+                        event.target.playVideo();
+                    }
+
+                    // 5. The API calls this function when the player's state changes.
+                    //    The function indicates that when playing a video (state=1),
+                    //    the player should play for six seconds and then stop.
+                    var done = false;
+
+
+                    function stopVideo() {
+                        player.stopVideo();
+                    }
+                </script>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">
+                <input id="ex8" style="width:250px" data-slider-id='ex1Slider' type="text" data-slider-min="30" data-slider-max="200" data-slider-step="10"
+                    data-slider-value="60" />
+            </div>
+            <div clas="col-xs-3">
+                <button id="play again" type="button" class="btn btn-primary btn-xs">
+                    <span class="glyphicon glyphicon-repeat"></span> 
+                </button>
+            </div>
+        </div>
+
+
+</body>
+
+</html>
