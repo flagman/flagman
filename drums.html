@@ -145,9 +145,19 @@
                             }
                         }
 
+                        function pausePlay() {
+                            if (player.getPlayerState() == 1) {
+                                player.pauseVideo();
+                            } else if (player.getPlayerState() == 2) {
+                                player.playVideo();
+                            }
+                        }
+
 
                         $(document).keydown(function (e) {
+
                             switch (e.which) {
+
                                 case 37: // left
                                     updateSlider(false);
                                     break;
@@ -163,7 +173,9 @@
                                 case 40: // down
                                     playAgain();
                                     break;
-
+                                case 32: // space 
+                                    pausePlay();
+                                    break;
                                 default:
                                     return; // exit this handler for other keys
                             }
@@ -192,11 +204,13 @@
                     <span class="glyphicon glyphicon-repeat"></span> 
                 </button>
             </div>
-
-
-
-
-
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-lg-12">
+                <kbd>пробел</kbd> - пауза/старт <br>
+                <kbd>&larr;</kbd> <kbd>&rarr;</kbd> - медленнее/быстрее<br>
+                <kbd>&uarr;</kbd> или <kbd>&darr;</kbd> - сначала
+            </div>
         </div>
     </div>
 
